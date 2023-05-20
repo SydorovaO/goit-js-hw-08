@@ -22,25 +22,14 @@ function createFormData(email, message) {
 
 function onFormSubmit(e) {
   e.preventDefault();
-
-  const email = refs.email.value;
-  const message = refs.message.value;
-
-  const formData = createFormData(email, message);
+  const formData = createFormData(email.value, message.value);
   console.log(formData);
-
   e.currentTarget.reset();
   localStorage.removeItem(STORAGE_KEY);
 }
-function onFormInput(e) {
-  updateFormData();
-  saveFormDataToLocalStorage();
-}
-function updateFormData() {
-  formData = createFormData(refs.email.value, refs.message.value);
-}
 
-function saveFormDataToLocalStorage() {
+function onFormInput() {
+  const formData = createFormData(email.value, message.value);
   const formDataToString = JSON.stringify(formData);
   localStorage.setItem(STORAGE_KEY, formDataToString);
 }
@@ -50,7 +39,45 @@ function populateForm() {
   const parsedObject = JSON.parse(savedObject);
 
   if (parsedObject) {
-    email.value = parsedObject.email;
-    message.value = parsedObject.message;
+    refs.email.value = parsedObject.email;
+    refs.message.value = parsedObject.message;
   }
 }
+
+// const formData = function (email, message) {
+//   return {
+//     email: email,
+//     message: message,
+//   };
+// };
+
+// function onFormSubmit(e) {
+//   e.preventDefault();
+
+//   formData(refs.email.value, refs.message.value);
+//   console.log(formData);
+
+//   e.currentTarget.reset();
+//   localStorage.removeItem(STORAGE_KEY);
+// }
+// function onFormInput(e) {
+//   formData = createFormData(refs.email.value, refs.message.value);
+//   saveFormDataToLocalStorage();
+// }
+
+// function updateFormData() {}
+
+// function saveFormDataToLocalStorage() {
+//   const formDataToString = JSON.stringify(formData);
+//   localStorage.setItem(STORAGE_KEY, formDataToString);
+// }
+
+// function populateForm() {
+//   const savedObject = localStorage.getItem(STORAGE_KEY);
+//   const parsedObject = JSON.parse(savedObject);
+
+//   if (parsedObject) {
+//     email.value = parsedObject.email;
+//     message.value = parsedObject.message;
+//   }
+// }
